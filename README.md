@@ -1,15 +1,22 @@
 # Personal Portfolio Website
 
 ## Overview
-This project is a simple personal portfolio website designed to showcase your skills, experience, and projects. It provides an easy way for potential employers, clients, or collaborators to learn more about you.
+
+This is a user-editable personal portfolio website. Enter your information (name, job title, about me, contact, skills, projects) directly on the page through a simple form, and your portfolio updates instantly in the browser.
 
 ## Features
-- Responsive design for all devices
-- About Me section
-- Skills and experience highlights
-- Portfolio/projects showcase
-- Contact form or contact information
-- Social media integration
 
-## Installation
-1. Clone the repository:
+- Responsive design for mobile and desktop
+- Form to enter and update your details live
+- "About Me" section
+- Skills and experience highlights
+- Portfolio/projects showcase (add your project title and link)
+- Contact information section
+- Social media integration (LinkedIn, GitHub)
+- No backend needed—updates happen in real time
+
+## Usage
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ApplaNaidu/Personal-Portfolio-Website-A-simple-portfolio-website-.git
