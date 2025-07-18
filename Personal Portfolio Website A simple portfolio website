@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>User Editable Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <style>
         body {
@@ -19,21 +19,159 @@
         }
         section {
             padding: 20px;
+            margin-bottom: 20px;
+        }
+        .skills, .projects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .skill, .project {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 200px;
+        }
+        .contact {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+        }
+        .social {
+            margin-top: 10px;
+        }
+        .social a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1.5em;
+        }
+        @media (max-width: 600px) {
+            .skills, .projects {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        form {
+            margin: 30px auto;
+            max-width: 500px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input, textarea {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px;
+            border-radius: 4px;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1 id="title">Geddapu Appla Naidu</h1>
-        <p>Web Developer</p>
+        <h1 id="title">Your Name</h1>
+        <p id="jobTitle">Your Job Title</p>
     </header>
+    <form id="userForm">
+        <h2>Enter Your Details</h2>
+        <input type="text" id="inputName" placeholder="Full Name" required>
+        <input type="text" id="inputTitle" placeholder="Job Title" required>
+        <textarea id="inputAbout" placeholder="About Me" rows="3" required></textarea>
+        <input type="email" id="inputEmail" placeholder="Email" required>
+        <input type="tel" id="inputPhone" placeholder="Phone Number" required>
+        <input type="url" id="inputLinkedin" placeholder="LinkedIn URL" required>
+        <input type="text" id="inputSkills" placeholder="Skills (comma separated)" required>
+        <textarea id="inputProjects" placeholder="Projects (Title|Link, one per line)" rows="3"></textarea>
+        <button type="submit">Update Portfolio</button>
+    </form>
     <section>
         <h2>About Me</h2>
-        <p>I am a web developer currently doing an internship at CodTech.</p>
+        <p id="aboutMe"></p>
+    </section>
+    <section>
+        <h2>Skills & Experience</h2>
+        <div class="skills" id="skillsList"></div>
+    </section>
+    <section>
+        <h2>Portfolio / Projects</h2>
+        <div class="projects" id="projectsList"></div>
+    </section>
+    <section>
+        <h2>Contact Information</h2>
+        <div class="contact">
+            <p>Email: <a id="emailLink" href="#">your.email@example.com</a></p>
+            <p>Phone: <span id="phoneText">0000000000</span></p>
+            <div class="social">
+                <a id="githubLink" href="https://github.com/" target="_blank">GitHub</a>
+                <a id="linkedinLink" href="#" target="_blank">LinkedIn</a>
+            </div>
+        </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         gsap.from("#title", { opacity: 0, y: -50, duration: 1 });
+        
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get values
+            const name = document.getElementById('inputName').value;
+            const jobTitle = document.getElementById('inputTitle').value;
+            const about = document.getElementById('inputAbout').value;
+            const email = document.getElementById('inputEmail').value;
+            const phone = document.getElementById('inputPhone').value;
+            const linkedin = document.getElementById('inputLinkedin').value;
+            const skills = document.getElementById('inputSkills').value.split(',');
+            const projectsRaw = document.getElementById('inputProjects').value.split('\n');
+
+            // Update sections
+            document.getElementById('title').textContent = name;
+            document.getElementById('jobTitle').textContent = jobTitle;
+            document.getElementById('aboutMe').textContent = about;
+            document.getElementById('emailLink').textContent = email;
+            document.getElementById('emailLink').href = `mailto:${email}`;
+            document.getElementById('phoneText').textContent = phone;
+            document.getElementById('linkedinLink').href = linkedin;
+
+            // Skills
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = '';
+            skills.forEach(skill => {
+                if (skill.trim() !== '') {
+                    const div = document.createElement('div');
+                    div.className = 'skill';
+                    div.textContent = skill.trim();
+                    skillsList.appendChild(div);
+                }
+            });
+
+            // Projects
+            const projectsList = document.getElementById('projectsList');
+            projectsList.innerHTML = '';
+            projectsRaw.forEach(projectLine => {
+                const [title, link] = projectLine.split('|');
+                if(title && link) {
+                    const div = document.createElement('div');
+                    div.className = 'project';
+                    div.innerHTML = `<h3>${title.trim()}</h3>
+                        <a href="${link.trim()}" target="_blank">View Project</a>`;
+                    projectsList.appendChild(div);
+                }
+            });
+        });
     </script>
     <script src="script.js"></script>
 </body>
